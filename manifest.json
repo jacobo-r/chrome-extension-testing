@@ -1,0 +1,44 @@
+{
+  "manifest_version": 3,
+  "name": "Test Hotkeys",
+  "version": "0.2",
+  "permissions": ["tabs"],
+  "host_permissions": [
+    "file:///*",
+    "http://localhost:3000/*"
+  ],
+  "background": {
+    "service_worker": "background.js"
+  },
+  "content_scripts": [
+    {
+      "matches": [
+        "file:///*",
+        "http://localhost:3000/*"
+      ],
+      "js": ["content.js"]
+    }
+  ],
+  "commands": {
+    "play_pause": {
+      "suggested_key": { "default": "Ctrl+Shift+5" },
+      "description": "Play/Pause",
+      "global": true
+    },
+    "next": {
+      "suggested_key": { "default": "Ctrl+Shift+6" },
+      "description": "Next Track",
+      "global": true
+    },
+    "prev": {
+      "suggested_key": { "default": "Ctrl+Shift+7" },
+      "description": "Previous Track",
+      "global": true
+    },
+    "copy_text": {
+      "suggested_key": { "default": "Ctrl+Shift+8" },
+      "description": "Copy text to clipboard",
+      "global": true
+    }
+  }
+}
