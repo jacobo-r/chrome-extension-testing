@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Extension Test Page</title>
+</head>
+<body style="font-family: sans-serif; padding: 2rem;">
+  <h2>Extension Test Player</h2>
+
+  <p><strong>Track:</strong> <span id="track">sample1.mp3</span></p>
+  <p><strong>Status:</strong> <span id="status">Paused</span></p>
+
+  <audio id="player" controls>
+    <source src="sample1.mp3" type="audio/mpeg" />
+  </audio>
+
+  <script>
+    const files = ["sample1.mp3", "sample2.mp3", "sample3.mp3"];
+    let index = 0;
+    const audio = document.getElementById("player");
+    const trackLabel = document.getElementById("track");
+    const statusLabel = document.getElementById("status");
+
+    function updateUI() {
+      trackLabel.textContent = files[index];
+      statusLabel.textContent = audio.paused ? "Paused" : "Playing";
+    }
+
+    window.addEventListener("extensionCommand", (event) => {
+      const { command } = event.detail;
+      console.log("Received command:", command);
+
+      switch (command) {
+        case "play_pause":
+          if (audio.paused) {
+            audio.play();
+          } else {
+            audio.pause();
+          }
+          break;
+        case "next":
+          index = (index + 1) % files.length;
+          audio.src = files[index];
+          audio.play();
+          break;
+        case "prev":
+          index = (index - 1 + files.length) % files.length;
+          audio.src = files[index];
+          audio.play();
+          break;
+        case "copy_text":
+          navigator.clipboard.writeText("Hello from test app!").then(() => {
+            console.log("Copied text to clipboard!");
+          });
+          break;
+      }
+
+      updateUI();
+    });
+
+    audio.addEventListener("play", updateUI);
+    audio.addEventListener("pause", updateUI);
+    updateUI();
+  </script>
+</body>
+</html>
