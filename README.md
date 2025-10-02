@@ -8,7 +8,8 @@ This project is a **minimal setup** to test controlling a webpage (audio player 
 
 ## 📂 Project Structure
 
-/test-project/
+```text
+test-project/
 ├── manifest.json      # Chrome extension config
 ├── background.js      # Background service worker (listens for hotkeys)
 ├── content.js         # Injected into page, forwards extension messages → page
